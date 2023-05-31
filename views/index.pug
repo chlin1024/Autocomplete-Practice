@@ -1,0 +1,30 @@
+doctype html
+html
+  head
+    title Autocomplete Demo
+  body
+    h1 Autocomplete Demo
+    input#searchInput(type='text', name='searchInput')
+    ul#autocompleteList
+    script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+    script.
+      $(document).ready(function() {
+        $('#searchInput').on('input', function() {
+          var query = $(this).val();
+          if (query) {
+            $.ajax({
+              type: 'POST',
+              url: '/autocomplete',
+              data: { q: query },
+              success: function(data) {
+                var suggestions = data.map(function(suggestion) {
+                  return '<li>' + suggestion + '</li>';
+                });
+                $('#autocompleteList').html(suggestions.join(''));
+              }
+            });
+          } else {
+            $('#autocompleteList').empty();
+          }
+        });
+      })
