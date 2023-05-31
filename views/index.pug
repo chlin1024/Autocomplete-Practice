@@ -21,6 +21,9 @@ html
                   return '<li>' + suggestion + '</li>';
                 });
                 $('#autocompleteList').html(suggestions.join(''));
+              },
+              error: function(error) {
+                console.log("no data");
               }
             });
           } else {

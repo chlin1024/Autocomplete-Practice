@@ -17,24 +17,33 @@ app.get("/", (req, res) => {
 });
 
 app.post("/autocomplete", async (req, res) => {
-  const { q } = req.body;
+  try {
+    const { q } = req.body;
 
-  const data = await es.search({
-    index: "movies",
-    body: {
-      query: {
-        regexp: {
-          title: `${q}.*`,
+    const searchKey = q.split(" ");
+
+    const data = await es.search({
+      index: "movies",
+      body: {
+        query: {
+          regexp: {
+            title: `.*${searchKey[0].toLowerCase()}.*`,
+          },
         },
       },
-    },
-  });
-  const resData = data.hits.hits.map((ele) => ele._source.title);
-  console.log(resData);
-  //   const suggestions = body.suggest.suggestions[0].options.map(
-  //     (option) => option.text
-  //   );
-  //   res.json(suggestions);
+    });
+    const titles = data.hits.hits.map((ele) => ele._source.title);
+    const resData =
+      searchKey.length > 1
+        ? titles.filter((ele) =>
+            ele.toLowerCase().includes(q.trim().toLowerCase())
+          )
+        : titles;
+    return res.json(resData);
+  } catch (err) {
+    console.error(err);
+    return res.json(err);
+  }
 });
 
 app.get("/search", function (req, res) {
