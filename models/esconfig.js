@@ -1,19 +1,19 @@
 const payload = {
-  index: "movies",
+  index: 'movies',
   body: {
     settings: {
       analysis: {
         analyzer: {
           my_analyzer: {
-            tokenizer: "my_tokenizer",
+            tokenizer: 'my_tokenizer',
           },
         },
         tokenizer: {
           my_tokenizer: {
-            type: "edge_ngram",
+            type: 'edge_ngram',
             min_gram: 1,
             max_gram: 10,
-            token_chars: ["letter", "digit", "whitespace"],
+            token_chars: ['letter', 'digit', 'whitespace'], //symbol?
           },
         },
       },
@@ -21,36 +21,36 @@ const payload = {
     mappings: {
       properties: {
         id: {
-          type: "integer",
+          type: 'integer',
         },
         title: {
-          type: "string",
-          analyzer: "indexing_analyzer",
+          type: 'string',
+          analyzer: 'indexing_analyzer',
         },
         genres: {
-          type: "keyword",
+          type: 'keyword',
         },
         original_language: {
-          type: "keyword",
+          type: 'keyword',
         },
         overview: {
-          type: "text",
+          type: 'text',
         },
         popularity: {
-          type: "float",
+          type: 'float',
         },
         release_date: {
-          type: "date",
+          type: 'date',
         },
         vote_average: {
-          type: "float",
+          type: 'float',
         },
         vote_count: {
-          type: "integer",
+          type: 'integer',
         },
       },
     },
   },
-};
+}
 
-export default payload;
+export default payload
