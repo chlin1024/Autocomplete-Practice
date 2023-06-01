@@ -1,0 +1,55 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+h1 {
+  margin-bottom: 20px;
+}
+input[type="text"] {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+li {
+  padding: 5px;
+  border-bottom: 1px solid #ccc;
+}
+#infop {
+  font-family: Arial, sans-serif;
+}
+
+.movie {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+.movie-title {
+  font-weight: bold;
+}
+
+.movie-rel_date {
+  font-style: italic;
+}
+
+.movie-overview {
+  margin-top: 10px;
+}
