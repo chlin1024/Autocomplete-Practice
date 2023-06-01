@@ -73,9 +73,22 @@ app.post('/searchmore', async (req, res) => {
       index: 'movies',
       body: {
         query: {
-          multi_match: {
-            query: q,
-            fields: ['title', 'overview', 'genres'],
+          bool: {
+            should: {
+              regexp: {
+                title: `.*${searchKey[0].toLowerCase()}.*`,
+              },
+              wildcard: {
+                'genres.keyword': `*${searchKey[0].toLowerCase()}*`,
+              },
+            },
+          },
+        },
+        highlight: {
+          fields: {
+            title: {},
+            overview: {},
+            'genres.keyword': {},
           },
         },
       },
