@@ -2,15 +2,74 @@ doctype html
 html
   head
     title Autocomplete Demo
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        margin-right: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 10px;
+      }
+      li {
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+      }
+      #infop {
+        font-family: Arial, sans-serif;
+      }
+      
+      .movie {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        background-color: #f5f5f5;
+      }
+      
+      .movie-title {
+        font-weight: bold;
+      }
+      
+      .movie-rel_date {
+        font-style: italic;
+      }
+      
+      .movie-overview {
+        margin-top: 10px;
+      }
   body
     h1 Autocomplete Demo
     input#searchInput(type='text', name='searchInput')
+    button#searchButton Search
     ul#autocompleteList
+    div#infop
     script(src='https://code.jquery.com/jquery-3.6.0.min.js')
     script.
       $(document).ready(function() {
         $('#searchInput').on('input', function() {
           var query = $(this).val();
+          $('#infop').empty();
           if (query) {
             $.ajax({
               type: 'POST',
@@ -28,6 +87,42 @@ html
             });
           } else {
             $('#autocompleteList').empty();
+          }
+        });
+      })
+    
+    
+    script.
+      $(document).ready(function() {
+        $('#searchButton').click(function() {
+          $('#autocompleteList').empty()
+          var query = $('#searchInput').val();
+          if (query) {
+            $.ajax({
+              type: 'POST',
+              url: '/searchmore',
+              data: { q: query },
+              success: function(data) {
+                // 處理搜索結果
+                console.log(data) 
+                var suggestions = data.map(function(suggestion) {
+                  //- return '<div>' + suggestion.overview + '</div>';
+                  return`
+                  <div class="movie">  
+                    <div class="movie-title"> Title: ${suggestion.title} </div>
+                    <div class="movie-rel_date"> Release Date: ${suggestion.release_date} </div>
+                    <div class="movie-overview"> ${suggestion.overview} </div>
+                  </div>
+                  `
+                });
+                $('#infop').html(suggestions.join(''));
+              },
+              error: function(error) {
+                console.log("no data");
+              }
+            });
+          } else {
+            $('#infop').empty();
           }
         });
       })
